@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "239835675025",
+    "project_id": "seenwageem-8a98c",
+    "storage_bucket": "seenwageem-8a98c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239835675025:android:27d672dc7c636129324230",
+        "android_client_info": {
+          "package_name": "com.example.seen_wa_geem_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnNcTQTvzRU54rec5YmsSvKM-7mSSJ-jY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
