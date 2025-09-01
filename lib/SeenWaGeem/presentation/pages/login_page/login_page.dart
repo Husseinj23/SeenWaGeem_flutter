@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/di/injection_container.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../presentation/pages/choose_avatar_page/choose_avatar_page.dart';
-import '../../bloc/auth_bloc/auth_bloc.dart';
-import '../../bloc/auth_bloc/auth_event.dart';
-import '../../bloc/auth_bloc/auth_state.dart';
+import '../../bloc/Auth_bloc/auth_bloc.dart';
+import '../../bloc/Auth_bloc/auth_event.dart';
+import '../../bloc/Auth_bloc/auth_state.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

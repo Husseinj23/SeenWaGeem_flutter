@@ -1,16 +1,18 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' show DioException, Options;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/network/dio_client.dart';
-import '../local/auth_local_data_source.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<User> signInWithGoogleFirebase();
-  Future<User> signInWithFacebookFirebase();
-  Future<User> signInWithTwitterFirebase();
+  Future<Map<String, dynamic>>
+  signInWithGoogleFirebase(); // Changed return type
+  Future<Map<String, dynamic>>
+  signInWithFacebookFirebase(); // Changed return type
+  Future<Map<String, dynamic>>
+  signInWithTwitterFirebase(); // Changed return type
   Future<Map<String, dynamic>> loginWithBackend(Map<String, dynamic> userData);
   Future<void> signOutFirebase();
 }
@@ -20,68 +22,122 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final FacebookAuth _facebookAuth;
-  final Dio _dio;
-  final AuthLocalDataSource _authLocalDataSource;
-
+  final DioClient _dioClient;
   AuthRemoteDataSourceImpl(
     this._firebaseAuth,
     this._googleSignIn,
     this._facebookAuth,
-    this._dio,
-    this._authLocalDataSource,
-  ) {
-    // Add the auth interceptor to the Dio instance
-    _dio.interceptors.add(AuthInterceptor(_authLocalDataSource));
-  }
+    this._dioClient,
+  );
 
   @override
-  Future<User> signInWithGoogleFirebase() async {
+  Future<Map<String, dynamic>> signInWithGoogleFirebase() async {
+    // Get Google user info FIRST
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) throw Exception('Google sign in aborted.');
+
+    // Save the important data before Firebase changes it
+    final socialData = {
+      'provider': 'google',
+      'providerId': googleUser.id,
+      'firstName': googleUser.displayName?.split(' ').firstOrNull ?? '',
+      'lastName': googleUser.displayName?.split(' ').skip(1).join(' ') ?? '',
+      'email': googleUser.email ?? '',
+    };
+
+    // Now do Firebase stuff
     final googleAuth = await googleUser.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
     final userCredential = await _firebaseAuth.signInWithCredential(credential);
-    if (userCredential.user == null)
-      throw Exception('Firebase user not found.');
-    return userCredential.user!;
+
+    // Return both pieces of info
+    return {'firebaseUser': userCredential.user!, 'socialData': socialData};
   }
 
   @override
-  Future<User> signInWithFacebookFirebase() async {
+  Future<Map<String, dynamic>> signInWithFacebookFirebase() async {
     final result = await _facebookAuth.login();
     if (result.status == LoginStatus.success) {
+      // Get Facebook user info FIRST
+      final userData = await _facebookAuth.getUserData();
+
+      final socialData = {
+        'provider': 'fb',
+        'providerId': userData['id'],
+        'firstName': userData['first_name'] ?? '',
+        'lastName': userData['last_name'] ?? '',
+        'email': userData['email'] ?? '',
+      };
+
+      // Now do Firebase stuff
       final credential = FacebookAuthProvider.credential(
         result.accessToken!.token,
       );
       final userCredential = await _firebaseAuth.signInWithCredential(
         credential,
       );
-      if (userCredential.user == null)
-        throw Exception('Firebase user not found.');
-      return userCredential.user!;
+
+      return {'firebaseUser': userCredential.user!, 'socialData': socialData};
     } else {
       throw Exception('Facebook sign in failed: ${result.message}');
     }
   }
 
   @override
-  Future<User> signInWithTwitterFirebase() async {
+  Future<Map<String, dynamic>> signInWithTwitterFirebase() async {
     final provider = TwitterAuthProvider();
     final userCredential = await _firebaseAuth.signInWithProvider(provider);
-    if (userCredential.user == null)
+
+    if (userCredential.user == null) {
       throw Exception('Firebase user not found.');
-    return userCredential.user!;
+    }
+
+    final socialData = {
+      'provider': 'twitter',
+      'providerId': userCredential.user!.uid,
+      'firstName': userCredential.user!.displayName?.split(' ').first ?? 'New',
+      'lastName':
+          userCredential.user!.displayName?.split(' ').skip(1).join(' ') ??
+          'User',
+      'email': userCredential.user!.email ?? '',
+    };
+
+    return {'firebaseUser': userCredential.user!, 'socialData': socialData};
   }
 
   @override
   Future<Map<String, dynamic>> loginWithBackend(
     Map<String, dynamic> userData,
   ) async {
-    final response = await _dio.post('/login', data: userData);
-    return response.data;
+    print('DEBUG: Sending to backend: $userData');
+    print('DEBUG: Full URL: ${_dioClient.dio.options.baseUrl}/login');
+
+    try {
+      final response = await _dioClient.dio.post(
+        '/login',
+        data: userData,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print('DEBUG: Backend response status: ${response.statusCode}');
+      print('DEBUG: Backend response data: ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('DEBUG: Backend request failed: $e');
+      if (e is DioException) {
+        print('DEBUG: Dio error type: ${e.type}');
+        print('DEBUG: Dio error response: ${e.response?.data}');
+        print('DEBUG: Dio error status: ${e.response?.statusCode}');
+      }
+      rethrow;
+    }
   }
 
   @override

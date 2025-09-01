@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../data/models/category_model.dart';
+import 'package:seen_wa_geem_flutter/SeenWaGeem/data/models/category_model.dart';
 
 abstract class CategoryRemoteDataSource {
   Future<List<CategoryModel>> getTopCategories();

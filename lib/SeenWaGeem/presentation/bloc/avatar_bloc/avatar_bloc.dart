@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../domain/usecases/avatar_usecases/get_avatars_usecase.dart';
 import 'avatar_event.dart';
 import 'avatar_state.dart';
 
+@injectable
 class AvatarBloc extends Bloc<AvatarEvent, AvatarState> {
   final GetAvatarsUseCase _getAvatarsUseCase;
 

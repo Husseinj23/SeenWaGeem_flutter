@@ -7,8 +7,9 @@ part 'auth_user.g.dart';
 class AuthUser with _$AuthUser {
   const factory AuthUser({
     required String id,
-    String? email,
-    String? name,
+    @JsonKey(name: 'username') String? email,
+    @JsonKey(name: 'firstName') String? firstName,
+    @JsonKey(name: 'lastName') String? lastName,
     @JsonKey(name: 'avatar') String? photoUrl,
   }) = _AuthUser;
 

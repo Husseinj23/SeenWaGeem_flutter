@@ -21,8 +21,12 @@ AuthUser _$AuthUserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AuthUser {
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'username')
   String? get email => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'firstName')
+  String? get firstName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'lastName')
+  String? get lastName => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar')
   String? get photoUrl => throw _privateConstructorUsedError;
 
@@ -39,8 +43,9 @@ abstract class $AuthUserCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String? email,
-      String? name,
+      @JsonKey(name: 'username') String? email,
+      @JsonKey(name: 'firstName') String? firstName,
+      @JsonKey(name: 'lastName') String? lastName,
       @JsonKey(name: 'avatar') String? photoUrl});
 }
 
@@ -59,7 +64,8 @@ class _$AuthUserCopyWithImpl<$Res, $Val extends AuthUser>
   $Res call({
     Object? id = null,
     Object? email = freezed,
-    Object? name = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -71,9 +77,13 @@ class _$AuthUserCopyWithImpl<$Res, $Val extends AuthUser>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
       photoUrl: freezed == photoUrl
           ? _value.photoUrl
@@ -93,8 +103,9 @@ abstract class _$$AuthUserImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String? email,
-      String? name,
+      @JsonKey(name: 'username') String? email,
+      @JsonKey(name: 'firstName') String? firstName,
+      @JsonKey(name: 'lastName') String? lastName,
       @JsonKey(name: 'avatar') String? photoUrl});
 }
 
@@ -111,7 +122,8 @@ class __$$AuthUserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? email = freezed,
-    Object? name = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_$AuthUserImpl(
@@ -123,9 +135,13 @@ class __$$AuthUserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
       photoUrl: freezed == photoUrl
           ? _value.photoUrl
@@ -140,8 +156,9 @@ class __$$AuthUserImplCopyWithImpl<$Res>
 class _$AuthUserImpl implements _AuthUser {
   const _$AuthUserImpl(
       {required this.id,
-      this.email,
-      this.name,
+      @JsonKey(name: 'username') this.email,
+      @JsonKey(name: 'firstName') this.firstName,
+      @JsonKey(name: 'lastName') this.lastName,
       @JsonKey(name: 'avatar') this.photoUrl});
 
   factory _$AuthUserImpl.fromJson(Map<String, dynamic> json) =>
@@ -150,16 +167,21 @@ class _$AuthUserImpl implements _AuthUser {
   @override
   final String id;
   @override
+  @JsonKey(name: 'username')
   final String? email;
   @override
-  final String? name;
+  @JsonKey(name: 'firstName')
+  final String? firstName;
+  @override
+  @JsonKey(name: 'lastName')
+  final String? lastName;
   @override
   @JsonKey(name: 'avatar')
   final String? photoUrl;
 
   @override
   String toString() {
-    return 'AuthUser(id: $id, email: $email, name: $name, photoUrl: $photoUrl)';
+    return 'AuthUser(id: $id, email: $email, firstName: $firstName, lastName: $lastName, photoUrl: $photoUrl)';
   }
 
   @override
@@ -169,14 +191,18 @@ class _$AuthUserImpl implements _AuthUser {
             other is _$AuthUserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, name, photoUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, id, email, firstName, lastName, photoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -195,8 +221,9 @@ class _$AuthUserImpl implements _AuthUser {
 abstract class _AuthUser implements AuthUser {
   const factory _AuthUser(
       {required final String id,
-      final String? email,
-      final String? name,
+      @JsonKey(name: 'username') final String? email,
+      @JsonKey(name: 'firstName') final String? firstName,
+      @JsonKey(name: 'lastName') final String? lastName,
       @JsonKey(name: 'avatar') final String? photoUrl}) = _$AuthUserImpl;
 
   factory _AuthUser.fromJson(Map<String, dynamic> json) =
@@ -205,9 +232,14 @@ abstract class _AuthUser implements AuthUser {
   @override
   String get id;
   @override
+  @JsonKey(name: 'username')
   String? get email;
   @override
-  String? get name;
+  @JsonKey(name: 'firstName')
+  String? get firstName;
+  @override
+  @JsonKey(name: 'lastName')
+  String? get lastName;
   @override
   @JsonKey(name: 'avatar')
   String? get photoUrl;

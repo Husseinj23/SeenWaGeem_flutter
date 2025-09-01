@@ -17,6 +17,13 @@ class DioClient {
     dio.options.connectTimeout = const Duration(seconds: 15);
     dio.options.receiveTimeout = const Duration(seconds: 15);
     dio.interceptors.add(AuthInterceptor(authLocalDataSource));
+    
+    // Add logging interceptor for debugging
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      logPrint: (obj) => print('DIO: $obj'),
+    ));
   }
 }
 
@@ -30,9 +37,12 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = await _authLocalDataSource.getToken();
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
+    // Don't add auth header for login requests
+    if (!options.path.contains('/login')) {
+      final token = await _authLocalDataSource.getToken();
+      if (token != null) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
     }
     super.onRequest(options, handler);
   }

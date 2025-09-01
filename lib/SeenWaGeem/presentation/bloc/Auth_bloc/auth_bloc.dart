@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/auth_user.dart';
 import '../../../domain/usecases/auth/sign_in_with_facebook_usecase.dart';
@@ -7,6 +8,7 @@ import '../../../domain/usecases/auth/sign_in_with_twitter_usecase.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInWithGoogleUseCase _signInWithGoogle;
   final SignInWithFacebookUseCase _signInWithFacebook;

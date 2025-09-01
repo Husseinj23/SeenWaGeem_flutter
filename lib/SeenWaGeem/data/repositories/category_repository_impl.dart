@@ -1,22 +1,28 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/models/category_model.dart';
+import '../../data/datasources/remote/category_remote_data_source.dart';
+import '../../domain/entities/category.dart';
+import '../../domain/repositories/category_repository.dart';
 
-abstract class CategoryRemoteDataSource {
-  Future<List<CategoryModel>> getTopCategories();
-}
+@LazySingleton(as: CategoryRepository)
+class CategoryRepositoryImpl implements CategoryRepository {
+  final CategoryRemoteDataSource _remoteDataSource;
 
-@LazySingleton(as: CategoryRemoteDataSource)
-class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  final Dio _dio;
-
-  CategoryRemoteDataSourceImpl(this._dio);
+  CategoryRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<List<CategoryModel>> getTopCategories() async {
-    final response = await _dio.get('/categories/top');
-    final List<dynamic> data = response.data['data'];
-    return data.map((json) => CategoryModel.fromJson(json)).toList();
+  Future<List<Category>> getTopCategories() async {
+    final categoryModels = await _remoteDataSource.getTopCategories();
+    return categoryModels
+        .map(
+          (model) => Category(
+            id: model.id,
+            name: model.name,
+            questionCount: model.questionCount,
+            color: model.color,
+          ),
+        )
+        .whereType<Category>()
+        .toList();
   }
 }

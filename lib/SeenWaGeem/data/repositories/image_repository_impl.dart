@@ -1,23 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class ImageRemoteDataSource {
-  Future<List<String>> getAvatars();
-}
+import '../../data/datasources/remote/image_remote_data_source.dart';
+import '../../domain/repositories/image_repository.dart';
 
-@LazySingleton(as: ImageRemoteDataSource)
-class ImageRemoteDataSourceImpl implements ImageRemoteDataSource {
-  final Dio _dio;
+@LazySingleton(as: ImageRepository)
+class ImageRepositoryImpl implements ImageRepository {
+  final ImageRemoteDataSource _remoteDataSource;
 
-  ImageRemoteDataSourceImpl(this._dio);
+  ImageRepositoryImpl(this._remoteDataSource);
 
   @override
   Future<List<String>> getAvatars() async {
-    final response = await _dio.get(
-      '/s3/directory',
-      queryParameters: {'foldername': 'avatars'},
-    );
-    final List<dynamic> data = response.data['data'];
-    return data.map((item) => item.toString()).toList();
+    return await _remoteDataSource.getAvatars();
   }
 }

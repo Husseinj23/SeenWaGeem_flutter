@@ -9,15 +9,17 @@ part of 'auth_user.dart';
 _$AuthUserImpl _$$AuthUserImplFromJson(Map<String, dynamic> json) =>
     _$AuthUserImpl(
       id: json['id'] as String,
-      email: json['email'] as String?,
-      name: json['name'] as String?,
+      email: json['username'] as String?,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
       photoUrl: json['avatar'] as String?,
     );
 
 Map<String, dynamic> _$$AuthUserImplToJson(_$AuthUserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'email': instance.email,
-      'name': instance.name,
+      'username': instance.email,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
       'avatar': instance.photoUrl,
     };
