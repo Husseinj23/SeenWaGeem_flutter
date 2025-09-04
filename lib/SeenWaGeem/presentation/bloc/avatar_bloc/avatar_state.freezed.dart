@@ -20,7 +20,9 @@ mixin _$AvatarState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> avatarUrls, int? selectedIndex)
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
         success,
     required TResult Function(String message) failure,
   }) =>
@@ -29,7 +31,10 @@ mixin _$AvatarState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +42,10 @@ mixin _$AvatarState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -46,6 +54,7 @@ mixin _$AvatarState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
   }) =>
@@ -54,6 +63,7 @@ mixin _$AvatarState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
   }) =>
@@ -62,6 +72,7 @@ mixin _$AvatarState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
@@ -127,7 +138,9 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> avatarUrls, int? selectedIndex)
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
         success,
     required TResult Function(String message) failure,
   }) {
@@ -139,7 +152,10 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult? Function(String message)? failure,
   }) {
     return initial?.call();
@@ -150,7 +166,10 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -165,6 +184,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
   }) {
@@ -176,6 +196,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
   }) {
@@ -187,6 +208,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
@@ -242,7 +264,9 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> avatarUrls, int? selectedIndex)
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
         success,
     required TResult Function(String message) failure,
   }) {
@@ -254,7 +278,10 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult? Function(String message)? failure,
   }) {
     return loading?.call();
@@ -265,7 +292,10 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -280,6 +310,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
   }) {
@@ -291,6 +322,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
   }) {
@@ -302,6 +334,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
@@ -318,12 +351,138 @@ abstract class _Loading implements AvatarState {
 }
 
 /// @nodoc
+abstract class _$$UpdatingImplCopyWith<$Res> {
+  factory _$$UpdatingImplCopyWith(
+          _$UpdatingImpl value, $Res Function(_$UpdatingImpl) then) =
+      __$$UpdatingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UpdatingImplCopyWithImpl<$Res>
+    extends _$AvatarStateCopyWithImpl<$Res, _$UpdatingImpl>
+    implements _$$UpdatingImplCopyWith<$Res> {
+  __$$UpdatingImplCopyWithImpl(
+      _$UpdatingImpl _value, $Res Function(_$UpdatingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UpdatingImpl implements _Updating {
+  const _$UpdatingImpl();
+
+  @override
+  String toString() {
+    return 'AvatarState.updating()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$UpdatingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
+        success,
+    required TResult Function(String message) failure,
+  }) {
+    return updating();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
+    TResult? Function(String message)? failure,
+  }) {
+    return updating?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
+    TResult Function(String message)? failure,
+    required TResult orElse(),
+  }) {
+    if (updating != null) {
+      return updating();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
+  }) {
+    return updating(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Failure value)? failure,
+  }) {
+    return updating?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (updating != null) {
+      return updating(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Updating implements AvatarState {
+  const factory _Updating() = _$UpdatingImpl;
+}
+
+/// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<String> avatarUrls, int? selectedIndex});
+  $Res call({List<String> avatarUrls, int? selectedIndex, bool avatarUpdated});
 }
 
 /// @nodoc
@@ -339,6 +498,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
   $Res call({
     Object? avatarUrls = null,
     Object? selectedIndex = freezed,
+    Object? avatarUpdated = null,
   }) {
     return _then(_$SuccessImpl(
       avatarUrls: null == avatarUrls
@@ -349,6 +509,10 @@ class __$$SuccessImplCopyWithImpl<$Res>
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
               as int?,
+      avatarUpdated: null == avatarUpdated
+          ? _value.avatarUpdated
+          : avatarUpdated // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -357,7 +521,9 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 class _$SuccessImpl implements _Success {
   const _$SuccessImpl(
-      {required final List<String> avatarUrls, this.selectedIndex})
+      {required final List<String> avatarUrls,
+      this.selectedIndex,
+      this.avatarUpdated = false})
       : _avatarUrls = avatarUrls;
 
   final List<String> _avatarUrls;
@@ -370,10 +536,13 @@ class _$SuccessImpl implements _Success {
 
   @override
   final int? selectedIndex;
+  @override
+  @JsonKey()
+  final bool avatarUpdated;
 
   @override
   String toString() {
-    return 'AvatarState.success(avatarUrls: $avatarUrls, selectedIndex: $selectedIndex)';
+    return 'AvatarState.success(avatarUrls: $avatarUrls, selectedIndex: $selectedIndex, avatarUpdated: $avatarUpdated)';
   }
 
   @override
@@ -384,12 +553,17 @@ class _$SuccessImpl implements _Success {
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
             (identical(other.selectedIndex, selectedIndex) ||
-                other.selectedIndex == selectedIndex));
+                other.selectedIndex == selectedIndex) &&
+            (identical(other.avatarUpdated, avatarUpdated) ||
+                other.avatarUpdated == avatarUpdated));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_avatarUrls), selectedIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_avatarUrls),
+      selectedIndex,
+      avatarUpdated);
 
   @JsonKey(ignore: true)
   @override
@@ -402,11 +576,13 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> avatarUrls, int? selectedIndex)
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
         success,
     required TResult Function(String message) failure,
   }) {
-    return success(avatarUrls, selectedIndex);
+    return success(avatarUrls, selectedIndex, avatarUpdated);
   }
 
   @override
@@ -414,10 +590,13 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(avatarUrls, selectedIndex);
+    return success?.call(avatarUrls, selectedIndex, avatarUpdated);
   }
 
   @override
@@ -425,12 +604,15 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(avatarUrls, selectedIndex);
+      return success(avatarUrls, selectedIndex, avatarUpdated);
     }
     return orElse();
   }
@@ -440,6 +622,7 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
   }) {
@@ -451,6 +634,7 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
   }) {
@@ -462,6 +646,7 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
@@ -476,10 +661,12 @@ class _$SuccessImpl implements _Success {
 abstract class _Success implements AvatarState {
   const factory _Success(
       {required final List<String> avatarUrls,
-      final int? selectedIndex}) = _$SuccessImpl;
+      final int? selectedIndex,
+      final bool avatarUpdated}) = _$SuccessImpl;
 
   List<String> get avatarUrls;
   int? get selectedIndex;
+  bool get avatarUpdated;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -551,7 +738,9 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> avatarUrls, int? selectedIndex)
+    required TResult Function() updating,
+    required TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)
         success,
     required TResult Function(String message) failure,
   }) {
@@ -563,7 +752,10 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult? Function()? updating,
+    TResult? Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -574,7 +766,10 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> avatarUrls, int? selectedIndex)? success,
+    TResult Function()? updating,
+    TResult Function(
+            List<String> avatarUrls, int? selectedIndex, bool avatarUpdated)?
+        success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -589,6 +784,7 @@ class _$FailureImpl implements _Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
   }) {
@@ -600,6 +796,7 @@ class _$FailureImpl implements _Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Updating value)? updating,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
   }) {
@@ -611,6 +808,7 @@ class _$FailureImpl implements _Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),

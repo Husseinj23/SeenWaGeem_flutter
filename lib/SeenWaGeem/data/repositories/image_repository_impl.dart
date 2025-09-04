@@ -13,4 +13,9 @@ class ImageRepositoryImpl implements ImageRepository {
   Future<List<String>> getAvatars() async {
     return await _remoteDataSource.getAvatars();
   }
+
+  @override
+  Future<void> updateAvatar(String avatarUrl) async {
+    return await _remoteDataSource.updateAvatar(avatarUrl);
+  }
 }

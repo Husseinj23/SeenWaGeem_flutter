@@ -7,7 +7,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_bloc.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_event.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_state.dart';
-import '../../../presentation/pages/home/home_page.dart';
 
 class ChooseAvatarPage extends StatelessWidget {
   const ChooseAvatarPage({super.key});
@@ -29,34 +28,44 @@ class ChooseAvatarView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.splashBackground,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
+              // Header Area
               Text(
                 'حدد الصورة الرمزية',
-                style: theme.textTheme.titleMedium?.copyWith(
+                style: theme.textTheme.headlineMedium?.copyWith(
                   color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
                 'أظهر شخصيتك الافتراضية!',
-                style: theme.textTheme.headlineMedium,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.grey[600],
+                ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+              
+              // Current Avatar Placeholder
               BlocBuilder<AvatarBloc, AvatarState>(
                 builder: (context, state) {
                   return state.maybeWhen(
-                    success: (urls, selectedIndex) =>
+                    success: (urls, selectedIndex, avatarUpdated) =>
                         _buildSelectedAvatar(urls, selectedIndex),
                     orElse: () => _buildSelectedAvatar([], null),
                   );
                 },
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+              
+              // Avatar Selection Grid
               Expanded(
                 child: BlocBuilder<AvatarBloc, AvatarState>(
                   builder: (context, state) {
@@ -65,14 +74,17 @@ class ChooseAvatarView extends StatelessWidget {
                           const Center(child: CircularProgressIndicator()),
                       loading: () =>
                           const Center(child: CircularProgressIndicator()),
+                      updating: () =>
+                          const Center(child: CircularProgressIndicator()),
                       failure: (message) => Center(child: Text(message)),
-                      success: (urls, selectedIndex) {
+                      success: (urls, selectedIndex, avatarUpdated) {
                         return GridView.builder(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
+                                crossAxisCount: 3,
                                 crossAxisSpacing: 16,
                                 mainAxisSpacing: 16,
+                                childAspectRatio: 1.0,
                               ),
                           itemCount: urls.length,
                           itemBuilder: (context, index) {
@@ -94,31 +106,100 @@ class ChooseAvatarView extends StatelessWidget {
                   },
                 ),
               ),
-              BlocBuilder<AvatarBloc, AvatarState>(
+              const SizedBox(height: 24),
+              
+              // Done Button
+              BlocConsumer<AvatarBloc, AvatarState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    success: (urls, selectedIndex, avatarUpdated) {
+                      if (avatarUpdated) {
+                        // Show success message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('تم تحديث الصورة الرمزية بنجاح!'),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        // Navigate to home page after a short delay
+                        final navigator = Navigator.of(context);
+                        Future.delayed(Duration(seconds: 2), () {
+                          navigator.pushReplacementNamed('/home');
+                        });
+                      }
+                    },
+                    failure: (message) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('فشل في تحديث الصورة الرمزية: $message'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    },
+                    orElse: () {},
+                  );
+                },
                 builder: (context, state) {
                   final bool isButtonEnabled = state.maybeWhen(
-                    success: (urls, selectedIndex) => selectedIndex != null,
+                    success: (urls, selectedIndex, avatarUpdated) => selectedIndex != null,
                     orElse: () => false,
                   );
 
-                  return ElevatedButton(
-                    style: theme.elevatedButtonTheme.style?.copyWith(
-                      backgroundColor: MaterialStateProperty.all(
-                        isButtonEnabled
-                            ? AppColors.secondary
-                            : Colors.grey.shade300,
+                  final bool isLoading = state.maybeWhen(
+                    updating: () => true,
+                    orElse: () => false,
+                  );
+
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isButtonEnabled
+                            ? AppColors.primary
+                            : Colors.grey[300],
+                        foregroundColor: isButtonEnabled
+                            ? Colors.white
+                            : Colors.grey[600],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 0,
                       ),
-                    ),
-                    onPressed: !isButtonEnabled
-                        ? null
-                        : () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const HomePage(),
+                      onPressed: (!isButtonEnabled || isLoading)
+                          ? null
+                          : () {
+                              final currentState = context.read<AvatarBloc>().state;
+                              currentState.maybeWhen(
+                                success: (urls, selectedIndex, avatarUpdated) {
+                                  if (selectedIndex != null) {
+                                    context.read<AvatarBloc>().add(
+                                      AvatarEvent.updateAvatar(
+                                        urls[selectedIndex],
+                                      ),
+                                    );
+                                  }
+                                },
+                                orElse: () {},
+                              );
+                            },
+                      child: isLoading
+                          ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
-                            );
-                          },
-                    child: const Text('تم'),
+                            )
+                          : Text(
+                              'تم',
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
                   );
                 },
               ),
@@ -130,16 +211,34 @@ class ChooseAvatarView extends StatelessWidget {
   }
 
   Widget _buildSelectedAvatar(List<String> urls, int? selectedIndex) {
-    if (selectedIndex == null) {
-      return CircleAvatar(
-        radius: 50,
-        backgroundColor: AppColors.primary.withOpacity(0.1),
-        child: const Icon(Icons.person, size: 60, color: AppColors.primary),
+    if (selectedIndex == null || urls.isEmpty) {
+      return Container(
+        width: 120,
+        height: 120,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primary.withValues(alpha: 0.1),
+        ),
+        child: Icon(
+          Icons.person,
+          size: 60,
+          color: AppColors.primary,
+        ),
       );
     }
-    return CircleAvatar(
-      radius: 50,
-      child: _AvatarImage(imageUrl: urls[selectedIndex]),
+    return Container(
+      width: 120,
+      height: 120,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.primary,
+          width: 3,
+        ),
+      ),
+      child: ClipOval(
+        child: _AvatarImage(imageUrl: urls[selectedIndex]),
+      ),
     );
   }
 }
@@ -155,10 +254,12 @@ class _AvatarGridItem extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: isSelected
-            ? Border.all(color: Theme.of(context).colorScheme.primary, width: 3)
+            ? Border.all(color: AppColors.primary, width: 3)
             : null,
       ),
-      child: _AvatarImage(imageUrl: imageUrl, isSelected: isSelected),
+      child: ClipOval(
+        child: _AvatarImage(imageUrl: imageUrl, isSelected: isSelected),
+      ),
     );
   }
 }
@@ -170,29 +271,30 @@ class _AvatarImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ClipOval(
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          CachedNetworkImage(
-            imageUrl: imageUrl,
-            fit: BoxFit.cover,
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) =>
-                const Icon(Icons.error, color: Colors.red),
-          ),
-          if (isSelected)
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: theme.colorScheme.primary.withOpacity(0.5),
-              ),
-              child: const Icon(Icons.check, color: Colors.white, size: 40),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        CachedNetworkImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) =>
+              const Icon(Icons.error, color: Colors.red),
+        ),
+        if (isSelected)
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primary.withValues(alpha: 0.3),
             ),
-        ],
-      ),
+            child: Icon(
+              Icons.check_circle,
+              color: AppColors.primary,
+              size: 32,
+            ),
+          ),
+      ],
     );
   }
 }

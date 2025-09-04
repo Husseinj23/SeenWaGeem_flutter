@@ -14,16 +14,19 @@ class DioClient {
     dio.options.validateStatus = (status) {
       return status != null && status < 500;
     };
-    dio.options.connectTimeout = const Duration(seconds: 15);
-    dio.options.receiveTimeout = const Duration(seconds: 15);
+    dio.options.connectTimeout = const Duration(seconds: 30);
+    dio.options.receiveTimeout = const Duration(seconds: 30);
+    dio.options.sendTimeout = const Duration(seconds: 30);
     dio.interceptors.add(AuthInterceptor(authLocalDataSource));
-    
+
     // Add logging interceptor for debugging
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-      logPrint: (obj) => print('DIO: $obj'),
-    ));
+    dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        logPrint: (obj) => print('DIO: $obj'),
+      ),
+    );
   }
 }
 
@@ -41,7 +44,8 @@ class AuthInterceptor extends Interceptor {
     if (!options.path.contains('/login')) {
       final token = await _authLocalDataSource.getToken();
       if (token != null) {
-        options.headers['Authorization'] = 'Bearer $token';
+        // Backend expects the raw token without the 'Bearer' prefix
+        options.headers['Authorization'] = token;
       }
     }
     super.onRequest(options, handler);
