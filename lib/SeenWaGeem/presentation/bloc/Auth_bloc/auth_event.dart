@@ -10,4 +10,11 @@ abstract class AuthEvent with _$AuthEvent {
       _SignInWithFacebookRequested;
   const factory AuthEvent.signInWithTwitterRequested() =
       _SignInWithTwitterRequested;
+  const factory AuthEvent.createUserRequested(Map<String, dynamic> userData) =
+      _CreateUserRequested;
+  const factory AuthEvent.updateAvatarRequested(String avatar) =
+      _UpdateAvatarRequested;
+  const factory AuthEvent.checkUserExistsRequested(String username) =
+      _CheckUserExistsRequested;
+  const factory AuthEvent.getCurrentUserRequested() = _GetCurrentUserRequested;
 }

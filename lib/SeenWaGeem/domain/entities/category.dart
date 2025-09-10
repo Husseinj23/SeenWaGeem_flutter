@@ -8,8 +8,9 @@ class Category with _$Category {
   const factory Category({
     required String id,
     required String name,
-    @JsonKey(name: 'questions_count') String? questionCount,
+    String? questionCount,
     String? color,
+    String? incentivePhrase,
   }) = _Category;
 
   factory Category.fromJson(Map<String, dynamic> json) =>

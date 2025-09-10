@@ -14,6 +14,9 @@ abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>>
   signInWithTwitterFirebase(); // Changed return type
   Future<Map<String, dynamic>> loginWithBackend(Map<String, dynamic> userData);
+  Future<Map<String, dynamic>> createUser(Map<String, dynamic> userData);
+  Future<Map<String, dynamic>> checkUserExists(String username);
+  Future<Map<String, dynamic>> updateUserAvatar(String avatar);
   Future<void> signOutFirebase();
 }
 
@@ -131,6 +134,95 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return response.data;
     } catch (e) {
       print('DEBUG: Backend request failed: $e');
+      if (e is DioException) {
+        print('DEBUG: Dio error type: ${e.type}');
+        print('DEBUG: Dio error response: ${e.response?.data}');
+        print('DEBUG: Dio error status: ${e.response?.statusCode}');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> createUser(
+    Map<String, dynamic> userData,
+  ) async {
+    print('DEBUG: Creating user with data: $userData');
+    
+    try {
+      final response = await _dioClient.dio.post(
+        '/login',
+        data: userData,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print('DEBUG: Create user response status: ${response.statusCode}');
+      print('DEBUG: Create user response data: ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('DEBUG: Create user request failed: $e');
+      if (e is DioException) {
+        print('DEBUG: Dio error type: ${e.type}');
+        print('DEBUG: Dio error response: ${e.response?.data}');
+        print('DEBUG: Dio error status: ${e.response?.statusCode}');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> checkUserExists(String username) async {
+    print('DEBUG: Checking if user exists: $username');
+    
+    try {
+      final response = await _dioClient.dio.get(
+        '/user/check',
+        queryParameters: {'username': username},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print('DEBUG: Check user response status: ${response.statusCode}');
+      print('DEBUG: Check user response data: ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('DEBUG: Check user request failed: $e');
+      if (e is DioException) {
+        print('DEBUG: Dio error type: ${e.type}');
+        print('DEBUG: Dio error response: ${e.response?.data}');
+        print('DEBUG: Dio error status: ${e.response?.statusCode}');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> updateUserAvatar(String avatar) async {
+    print('DEBUG: Updating user avatar: $avatar');
+    
+    try {
+      final response = await _dioClient.dio.put(
+        '/avatar',
+        data: {'avatar': avatar},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print('DEBUG: Update avatar response status: ${response.statusCode}');
+      print('DEBUG: Update avatar response data: ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('DEBUG: Update avatar request failed: $e');
       if (e is DioException) {
         print('DEBUG: Dio error type: ${e.type}');
         print('DEBUG: Dio error response: ${e.response?.data}');

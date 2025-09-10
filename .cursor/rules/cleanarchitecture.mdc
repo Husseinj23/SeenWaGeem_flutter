@@ -1,0 +1,18 @@
+---
+description: Clean Architecture implementation rules - see flutter_clean_bloc.mdc for complete guidelines
+globs: ["**/*.dart"]
+alwaysApply: true
+---
+
+# Clean Architecture Rules
+
+This project follows Clean Architecture principles. See `flutter_clean_bloc.mdc` for complete implementation guidelines.
+
+## Key Clean Architecture Requirements
+- Three-layer architecture: Domain, Data, Presentation
+- Dependencies point inward toward Domain
+- Domain layer has no external dependencies
+- Use interfaces/abstract classes for layer boundaries
+- Repository pattern for data access
+- Use case pattern for business logic
+- Use `.freezed.dart` and `.g.dart` code generation when needed

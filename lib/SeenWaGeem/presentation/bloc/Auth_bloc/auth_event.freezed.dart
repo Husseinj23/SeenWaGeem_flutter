@@ -21,6 +21,11 @@ mixin _$AuthEvent {
     required TResult Function() signInWithGoogleRequested,
     required TResult Function() signInWithFacebookRequested,
     required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +33,10 @@ mixin _$AuthEvent {
     TResult? Function()? signInWithGoogleRequested,
     TResult? Function()? signInWithFacebookRequested,
     TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +44,10 @@ mixin _$AuthEvent {
     TResult Function()? signInWithGoogleRequested,
     TResult Function()? signInWithFacebookRequested,
     TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -46,6 +59,13 @@ mixin _$AuthEvent {
         signInWithFacebookRequested,
     required TResult Function(_SignInWithTwitterRequested value)
         signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +76,11 @@ mixin _$AuthEvent {
         signInWithFacebookRequested,
     TResult? Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,6 +91,10 @@ mixin _$AuthEvent {
         signInWithFacebookRequested,
     TResult Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -132,6 +161,11 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
     required TResult Function() signInWithGoogleRequested,
     required TResult Function() signInWithFacebookRequested,
     required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
   }) {
     return signInWithGoogleRequested();
   }
@@ -142,6 +176,10 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
     TResult? Function()? signInWithGoogleRequested,
     TResult? Function()? signInWithFacebookRequested,
     TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
   }) {
     return signInWithGoogleRequested?.call();
   }
@@ -152,6 +190,10 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
     TResult Function()? signInWithGoogleRequested,
     TResult Function()? signInWithFacebookRequested,
     TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithGoogleRequested != null) {
@@ -169,6 +211,13 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
         signInWithFacebookRequested,
     required TResult Function(_SignInWithTwitterRequested value)
         signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
   }) {
     return signInWithGoogleRequested(this);
   }
@@ -182,6 +231,11 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
         signInWithFacebookRequested,
     TResult? Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
   }) {
     return signInWithGoogleRequested?.call(this);
   }
@@ -195,6 +249,10 @@ class _$SignInWithGoogleRequestedImpl implements _SignInWithGoogleRequested {
         signInWithFacebookRequested,
     TResult Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithGoogleRequested != null) {
@@ -253,6 +311,11 @@ class _$SignInWithFacebookRequestedImpl
     required TResult Function() signInWithGoogleRequested,
     required TResult Function() signInWithFacebookRequested,
     required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
   }) {
     return signInWithFacebookRequested();
   }
@@ -263,6 +326,10 @@ class _$SignInWithFacebookRequestedImpl
     TResult? Function()? signInWithGoogleRequested,
     TResult? Function()? signInWithFacebookRequested,
     TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
   }) {
     return signInWithFacebookRequested?.call();
   }
@@ -273,6 +340,10 @@ class _$SignInWithFacebookRequestedImpl
     TResult Function()? signInWithGoogleRequested,
     TResult Function()? signInWithFacebookRequested,
     TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithFacebookRequested != null) {
@@ -290,6 +361,13 @@ class _$SignInWithFacebookRequestedImpl
         signInWithFacebookRequested,
     required TResult Function(_SignInWithTwitterRequested value)
         signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
   }) {
     return signInWithFacebookRequested(this);
   }
@@ -303,6 +381,11 @@ class _$SignInWithFacebookRequestedImpl
         signInWithFacebookRequested,
     TResult? Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
   }) {
     return signInWithFacebookRequested?.call(this);
   }
@@ -316,6 +399,10 @@ class _$SignInWithFacebookRequestedImpl
         signInWithFacebookRequested,
     TResult Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithFacebookRequested != null) {
@@ -374,6 +461,11 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
     required TResult Function() signInWithGoogleRequested,
     required TResult Function() signInWithFacebookRequested,
     required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
   }) {
     return signInWithTwitterRequested();
   }
@@ -384,6 +476,10 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
     TResult? Function()? signInWithGoogleRequested,
     TResult? Function()? signInWithFacebookRequested,
     TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
   }) {
     return signInWithTwitterRequested?.call();
   }
@@ -394,6 +490,10 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
     TResult Function()? signInWithGoogleRequested,
     TResult Function()? signInWithFacebookRequested,
     TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithTwitterRequested != null) {
@@ -411,6 +511,13 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
         signInWithFacebookRequested,
     required TResult Function(_SignInWithTwitterRequested value)
         signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
   }) {
     return signInWithTwitterRequested(this);
   }
@@ -424,6 +531,11 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
         signInWithFacebookRequested,
     TResult? Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
   }) {
     return signInWithTwitterRequested?.call(this);
   }
@@ -437,6 +549,10 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
         signInWithFacebookRequested,
     TResult Function(_SignInWithTwitterRequested value)?
         signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
     required TResult orElse(),
   }) {
     if (signInWithTwitterRequested != null) {
@@ -449,4 +565,701 @@ class _$SignInWithTwitterRequestedImpl implements _SignInWithTwitterRequested {
 abstract class _SignInWithTwitterRequested implements AuthEvent {
   const factory _SignInWithTwitterRequested() =
       _$SignInWithTwitterRequestedImpl;
+}
+
+/// @nodoc
+abstract class _$$CreateUserRequestedImplCopyWith<$Res> {
+  factory _$$CreateUserRequestedImplCopyWith(_$CreateUserRequestedImpl value,
+          $Res Function(_$CreateUserRequestedImpl) then) =
+      __$$CreateUserRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Map<String, dynamic> userData});
+}
+
+/// @nodoc
+class __$$CreateUserRequestedImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$CreateUserRequestedImpl>
+    implements _$$CreateUserRequestedImplCopyWith<$Res> {
+  __$$CreateUserRequestedImplCopyWithImpl(_$CreateUserRequestedImpl _value,
+      $Res Function(_$CreateUserRequestedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userData = null,
+  }) {
+    return _then(_$CreateUserRequestedImpl(
+      null == userData
+          ? _value._userData
+          : userData // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CreateUserRequestedImpl implements _CreateUserRequested {
+  const _$CreateUserRequestedImpl(final Map<String, dynamic> userData)
+      : _userData = userData;
+
+  final Map<String, dynamic> _userData;
+  @override
+  Map<String, dynamic> get userData {
+    if (_userData is EqualUnmodifiableMapView) return _userData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_userData);
+  }
+
+  @override
+  String toString() {
+    return 'AuthEvent.createUserRequested(userData: $userData)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreateUserRequestedImpl &&
+            const DeepCollectionEquality().equals(other._userData, _userData));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_userData));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreateUserRequestedImplCopyWith<_$CreateUserRequestedImpl> get copyWith =>
+      __$$CreateUserRequestedImplCopyWithImpl<_$CreateUserRequestedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogleRequested,
+    required TResult Function() signInWithFacebookRequested,
+    required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
+  }) {
+    return createUserRequested(userData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogleRequested,
+    TResult? Function()? signInWithFacebookRequested,
+    TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
+  }) {
+    return createUserRequested?.call(userData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogleRequested,
+    TResult Function()? signInWithFacebookRequested,
+    TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (createUserRequested != null) {
+      return createUserRequested(userData);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleRequested value)
+        signInWithGoogleRequested,
+    required TResult Function(_SignInWithFacebookRequested value)
+        signInWithFacebookRequested,
+    required TResult Function(_SignInWithTwitterRequested value)
+        signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
+  }) {
+    return createUserRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult? Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult? Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+  }) {
+    return createUserRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (createUserRequested != null) {
+      return createUserRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateUserRequested implements AuthEvent {
+  const factory _CreateUserRequested(final Map<String, dynamic> userData) =
+      _$CreateUserRequestedImpl;
+
+  Map<String, dynamic> get userData;
+  @JsonKey(ignore: true)
+  _$$CreateUserRequestedImplCopyWith<_$CreateUserRequestedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UpdateAvatarRequestedImplCopyWith<$Res> {
+  factory _$$UpdateAvatarRequestedImplCopyWith(
+          _$UpdateAvatarRequestedImpl value,
+          $Res Function(_$UpdateAvatarRequestedImpl) then) =
+      __$$UpdateAvatarRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String avatar});
+}
+
+/// @nodoc
+class __$$UpdateAvatarRequestedImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$UpdateAvatarRequestedImpl>
+    implements _$$UpdateAvatarRequestedImplCopyWith<$Res> {
+  __$$UpdateAvatarRequestedImplCopyWithImpl(_$UpdateAvatarRequestedImpl _value,
+      $Res Function(_$UpdateAvatarRequestedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? avatar = null,
+  }) {
+    return _then(_$UpdateAvatarRequestedImpl(
+      null == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateAvatarRequestedImpl implements _UpdateAvatarRequested {
+  const _$UpdateAvatarRequestedImpl(this.avatar);
+
+  @override
+  final String avatar;
+
+  @override
+  String toString() {
+    return 'AuthEvent.updateAvatarRequested(avatar: $avatar)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateAvatarRequestedImpl &&
+            (identical(other.avatar, avatar) || other.avatar == avatar));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, avatar);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateAvatarRequestedImplCopyWith<_$UpdateAvatarRequestedImpl>
+      get copyWith => __$$UpdateAvatarRequestedImplCopyWithImpl<
+          _$UpdateAvatarRequestedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogleRequested,
+    required TResult Function() signInWithFacebookRequested,
+    required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
+  }) {
+    return updateAvatarRequested(avatar);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogleRequested,
+    TResult? Function()? signInWithFacebookRequested,
+    TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
+  }) {
+    return updateAvatarRequested?.call(avatar);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogleRequested,
+    TResult Function()? signInWithFacebookRequested,
+    TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (updateAvatarRequested != null) {
+      return updateAvatarRequested(avatar);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleRequested value)
+        signInWithGoogleRequested,
+    required TResult Function(_SignInWithFacebookRequested value)
+        signInWithFacebookRequested,
+    required TResult Function(_SignInWithTwitterRequested value)
+        signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
+  }) {
+    return updateAvatarRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult? Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult? Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+  }) {
+    return updateAvatarRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (updateAvatarRequested != null) {
+      return updateAvatarRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateAvatarRequested implements AuthEvent {
+  const factory _UpdateAvatarRequested(final String avatar) =
+      _$UpdateAvatarRequestedImpl;
+
+  String get avatar;
+  @JsonKey(ignore: true)
+  _$$UpdateAvatarRequestedImplCopyWith<_$UpdateAvatarRequestedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CheckUserExistsRequestedImplCopyWith<$Res> {
+  factory _$$CheckUserExistsRequestedImplCopyWith(
+          _$CheckUserExistsRequestedImpl value,
+          $Res Function(_$CheckUserExistsRequestedImpl) then) =
+      __$$CheckUserExistsRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String username});
+}
+
+/// @nodoc
+class __$$CheckUserExistsRequestedImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$CheckUserExistsRequestedImpl>
+    implements _$$CheckUserExistsRequestedImplCopyWith<$Res> {
+  __$$CheckUserExistsRequestedImplCopyWithImpl(
+      _$CheckUserExistsRequestedImpl _value,
+      $Res Function(_$CheckUserExistsRequestedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+  }) {
+    return _then(_$CheckUserExistsRequestedImpl(
+      null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CheckUserExistsRequestedImpl implements _CheckUserExistsRequested {
+  const _$CheckUserExistsRequestedImpl(this.username);
+
+  @override
+  final String username;
+
+  @override
+  String toString() {
+    return 'AuthEvent.checkUserExistsRequested(username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CheckUserExistsRequestedImpl &&
+            (identical(other.username, username) ||
+                other.username == username));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, username);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CheckUserExistsRequestedImplCopyWith<_$CheckUserExistsRequestedImpl>
+      get copyWith => __$$CheckUserExistsRequestedImplCopyWithImpl<
+          _$CheckUserExistsRequestedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogleRequested,
+    required TResult Function() signInWithFacebookRequested,
+    required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
+  }) {
+    return checkUserExistsRequested(username);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogleRequested,
+    TResult? Function()? signInWithFacebookRequested,
+    TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
+  }) {
+    return checkUserExistsRequested?.call(username);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogleRequested,
+    TResult Function()? signInWithFacebookRequested,
+    TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (checkUserExistsRequested != null) {
+      return checkUserExistsRequested(username);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleRequested value)
+        signInWithGoogleRequested,
+    required TResult Function(_SignInWithFacebookRequested value)
+        signInWithFacebookRequested,
+    required TResult Function(_SignInWithTwitterRequested value)
+        signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
+  }) {
+    return checkUserExistsRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult? Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult? Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+  }) {
+    return checkUserExistsRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (checkUserExistsRequested != null) {
+      return checkUserExistsRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CheckUserExistsRequested implements AuthEvent {
+  const factory _CheckUserExistsRequested(final String username) =
+      _$CheckUserExistsRequestedImpl;
+
+  String get username;
+  @JsonKey(ignore: true)
+  _$$CheckUserExistsRequestedImplCopyWith<_$CheckUserExistsRequestedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetCurrentUserRequestedImplCopyWith<$Res> {
+  factory _$$GetCurrentUserRequestedImplCopyWith(
+          _$GetCurrentUserRequestedImpl value,
+          $Res Function(_$GetCurrentUserRequestedImpl) then) =
+      __$$GetCurrentUserRequestedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetCurrentUserRequestedImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$GetCurrentUserRequestedImpl>
+    implements _$$GetCurrentUserRequestedImplCopyWith<$Res> {
+  __$$GetCurrentUserRequestedImplCopyWithImpl(
+      _$GetCurrentUserRequestedImpl _value,
+      $Res Function(_$GetCurrentUserRequestedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetCurrentUserRequestedImpl implements _GetCurrentUserRequested {
+  const _$GetCurrentUserRequestedImpl();
+
+  @override
+  String toString() {
+    return 'AuthEvent.getCurrentUserRequested()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetCurrentUserRequestedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogleRequested,
+    required TResult Function() signInWithFacebookRequested,
+    required TResult Function() signInWithTwitterRequested,
+    required TResult Function(Map<String, dynamic> userData)
+        createUserRequested,
+    required TResult Function(String avatar) updateAvatarRequested,
+    required TResult Function(String username) checkUserExistsRequested,
+    required TResult Function() getCurrentUserRequested,
+  }) {
+    return getCurrentUserRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogleRequested,
+    TResult? Function()? signInWithFacebookRequested,
+    TResult? Function()? signInWithTwitterRequested,
+    TResult? Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult? Function(String avatar)? updateAvatarRequested,
+    TResult? Function(String username)? checkUserExistsRequested,
+    TResult? Function()? getCurrentUserRequested,
+  }) {
+    return getCurrentUserRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogleRequested,
+    TResult Function()? signInWithFacebookRequested,
+    TResult Function()? signInWithTwitterRequested,
+    TResult Function(Map<String, dynamic> userData)? createUserRequested,
+    TResult Function(String avatar)? updateAvatarRequested,
+    TResult Function(String username)? checkUserExistsRequested,
+    TResult Function()? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (getCurrentUserRequested != null) {
+      return getCurrentUserRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleRequested value)
+        signInWithGoogleRequested,
+    required TResult Function(_SignInWithFacebookRequested value)
+        signInWithFacebookRequested,
+    required TResult Function(_SignInWithTwitterRequested value)
+        signInWithTwitterRequested,
+    required TResult Function(_CreateUserRequested value) createUserRequested,
+    required TResult Function(_UpdateAvatarRequested value)
+        updateAvatarRequested,
+    required TResult Function(_CheckUserExistsRequested value)
+        checkUserExistsRequested,
+    required TResult Function(_GetCurrentUserRequested value)
+        getCurrentUserRequested,
+  }) {
+    return getCurrentUserRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult? Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult? Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult? Function(_CreateUserRequested value)? createUserRequested,
+    TResult? Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult? Function(_CheckUserExistsRequested value)?
+        checkUserExistsRequested,
+    TResult? Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+  }) {
+    return getCurrentUserRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleRequested value)?
+        signInWithGoogleRequested,
+    TResult Function(_SignInWithFacebookRequested value)?
+        signInWithFacebookRequested,
+    TResult Function(_SignInWithTwitterRequested value)?
+        signInWithTwitterRequested,
+    TResult Function(_CreateUserRequested value)? createUserRequested,
+    TResult Function(_UpdateAvatarRequested value)? updateAvatarRequested,
+    TResult Function(_CheckUserExistsRequested value)? checkUserExistsRequested,
+    TResult Function(_GetCurrentUserRequested value)? getCurrentUserRequested,
+    required TResult orElse(),
+  }) {
+    if (getCurrentUserRequested != null) {
+      return getCurrentUserRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetCurrentUserRequested implements AuthEvent {
+  const factory _GetCurrentUserRequested() = _$GetCurrentUserRequestedImpl;
 }

@@ -7,15 +7,26 @@ import '../../../core/theme/app_colors.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_bloc.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_event.dart';
 import '../../../presentation/bloc/avatar_bloc/avatar_state.dart';
+import '../../../presentation/bloc/Auth_bloc/auth_bloc.dart';
+import '../../../presentation/bloc/Auth_bloc/auth_event.dart';
+import '../../../presentation/bloc/Auth_bloc/auth_state.dart';
+import '../home/home_page.dart';
 
 class ChooseAvatarPage extends StatelessWidget {
   const ChooseAvatarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          sl<AvatarBloc>()..add(const AvatarEvent.fetchAvatars()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              sl<AvatarBloc>()..add(const AvatarEvent.fetchAvatars()),
+        ),
+        BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+        ),
+      ],
       child: const ChooseAvatarView(),
     );
   }
@@ -109,25 +120,27 @@ class ChooseAvatarView extends StatelessWidget {
               const SizedBox(height: 24),
               
               // Done Button
-              BlocConsumer<AvatarBloc, AvatarState>(
+              BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
-                  state.maybeWhen(
-                    success: (urls, selectedIndex, avatarUpdated) {
-                      if (avatarUpdated) {
-                        // Show success message
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('تم تحديث الصورة الرمزية بنجاح!'),
-                            backgroundColor: Colors.green,
-                            duration: Duration(seconds: 2),
+                  state.whenOrNull(
+                    avatarUpdated: (user) {
+                      // Show success message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('تم تحديث الصورة الرمزية بنجاح!'),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      // Navigate to home page after a short delay
+                      final navigator = Navigator.of(context);
+                      Future.delayed(Duration(seconds: 2), () {
+                        navigator.pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
                           ),
                         );
-                        // Navigate to home page after a short delay
-                        final navigator = Navigator.of(context);
-                        Future.delayed(Duration(seconds: 2), () {
-                          navigator.pushReplacementNamed('/home');
-                        });
-                      }
+                      });
                     },
                     failure: (message) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -137,17 +150,18 @@ class ChooseAvatarView extends StatelessWidget {
                         ),
                       );
                     },
-                    orElse: () {},
                   );
                 },
-                builder: (context, state) {
-                  final bool isButtonEnabled = state.maybeWhen(
+                builder: (context, authState) {
+                  // Get avatar state for button enabling
+                  final avatarState = context.watch<AvatarBloc>().state;
+                  final bool isButtonEnabled = avatarState.maybeWhen(
                     success: (urls, selectedIndex, avatarUpdated) => selectedIndex != null,
                     orElse: () => false,
                   );
 
-                  final bool isLoading = state.maybeWhen(
-                    updating: () => true,
+                  final bool isLoading = authState.maybeWhen(
+                    loading: () => true,
                     orElse: () => false,
                   );
 
@@ -174,10 +188,11 @@ class ChooseAvatarView extends StatelessWidget {
                               currentState.maybeWhen(
                                 success: (urls, selectedIndex, avatarUpdated) {
                                   if (selectedIndex != null) {
-                                    context.read<AvatarBloc>().add(
-                                      AvatarEvent.updateAvatar(
-                                        urls[selectedIndex],
-                                      ),
+                                    // Extract just the filename from the URL
+                                    final avatarUrl = urls[selectedIndex];
+                                    final avatarFilename = avatarUrl.split('/').last;
+                                    context.read<AuthBloc>().add(
+                                      AuthEvent.updateAvatarRequested(avatarFilename),
                                     );
                                   }
                                 },

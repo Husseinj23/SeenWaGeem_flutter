@@ -10,7 +10,8 @@ class AuthUser with _$AuthUser {
     @JsonKey(name: 'username') String? email,
     @JsonKey(name: 'firstName') String? firstName,
     @JsonKey(name: 'lastName') String? lastName,
-    @JsonKey(name: 'avatar') String? photoUrl,
+    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(name: 'photoUrl') String? photoUrl,
   }) = _AuthUser;
 
   factory AuthUser.fromJson(Map<String, dynamic> json) =>

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/di/injection_container.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../presentation/pages/choose_avatar_page/choose_avatar_page.dart';
+import '../../../presentation/pages/home/home_page.dart';
 import '../../bloc/Auth_bloc/auth_bloc.dart';
 import '../../bloc/Auth_bloc/auth_event.dart';
 import '../../bloc/Auth_bloc/auth_state.dart';
@@ -23,6 +24,12 @@ class LoginPage extends StatelessWidget {
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
+  void _handleSocialSignIn(BuildContext context, VoidCallback signInAction) {
+    // For now, just trigger the sign in action
+    // In a real implementation, you might want to check user existence first
+    signInAction();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +37,25 @@ class LoginView extends StatelessWidget {
         listener: (context, state) {
           state.whenOrNull(
             success: (user) {
+              // User successfully signed in, check if they have an avatar
+              if (user.avatar != null && user.avatar!.isNotEmpty) {
+                // User has avatar, go to home
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                );
+              } else {
+                // User doesn't have avatar, go to avatar selection
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const ChooseAvatarPage(),
+                  ),
+                );
+              }
+            },
+            userCreated: (user) {
+              // New user created, go to avatar selection
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const ChooseAvatarPage(),
@@ -62,24 +88,33 @@ class LoginView extends StatelessWidget {
                           _SocialSignInButton(
                             assetName: 'assets/images/login/twitter.png',
                             text: 'Sign in with X',
-                            onPressed: () => context.read<AuthBloc>().add(
-                              const AuthEvent.signInWithTwitterRequested(),
+                            onPressed: () => _handleSocialSignIn(
+                              context,
+                              () => context.read<AuthBloc>().add(
+                                const AuthEvent.signInWithTwitterRequested(),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 16),
                           _SocialSignInButton(
                             assetName: 'assets/images/login/facebook.png',
                             text: 'Sign in with Facebook',
-                            onPressed: () => context.read<AuthBloc>().add(
-                              const AuthEvent.signInWithFacebookRequested(),
+                            onPressed: () => _handleSocialSignIn(
+                              context,
+                              () => context.read<AuthBloc>().add(
+                                const AuthEvent.signInWithFacebookRequested(),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 16),
                           _SocialSignInButton(
                             assetName: 'assets/images/login/google.png',
                             text: 'Sign in with Google',
-                            onPressed: () => context.read<AuthBloc>().add(
-                              const AuthEvent.signInWithGoogleRequested(),
+                            onPressed: () => _handleSocialSignIn(
+                              context,
+                              () => context.read<AuthBloc>().add(
+                                const AuthEvent.signInWithGoogleRequested(),
+                              ),
                             ),
                           ),
                         ],

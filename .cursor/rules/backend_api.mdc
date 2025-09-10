@@ -1,0 +1,161 @@
+---
+description: Backend API Configuration and Endpoint Rules
+globs: ["**/*.dart"]
+alwaysApply: true
+---
+
+# Backend API Configuration Rules
+
+This project uses a specific backend API configuration. All backend endpoints and configurations must follow these guidelines.
+
+## API Configuration
+
+### Base URL
+- **Production Base URL**: `https://appswg.com/app`
+- **Development Base URL**: `http://3.133.162.70:3000` (from environment file)
+
+### API Documentation Source
+- **Primary Reference**: `SeenWaGeem.postman_collection.json` - Contains all available API endpoints
+- **Environment Configuration**: `swg-production-env.postman_environment.json` - Contains environment variables and base URLs
+
+## Backend Integration Rules
+
+### 1. API Endpoint Management
+- **ALWAYS reference the Postman collection** for available endpoints
+- **ALWAYS use the environment file** for base URL configuration
+- **DO NOT create new endpoints** without updating the Postman collection first
+- **DO NOT hardcode URLs** - use environment variables
+
+### 2. Required API Endpoints (from Postman Collection)
+
+#### Authentication
+- `POST /login` - User login
+- `POST /login` - Login by Player1
+- `POST /login` - Login by Player2
+
+#### User Management
+- `PUT /avatar` - Edit user avatar
+
+#### Categories
+- `GET /categories` - Get all categories
+- `GET /categories/top` - Get top categories
+- `GET /categories/extended` - Get all categories extended
+- `POST /categories` - Create new category
+- `GET /categories/{id}` - Get specific category by ID
+- `PUT /categories/{id}` - Update category
+- `DELETE /categories/{id}` - Delete category
+
+#### Subjects
+- `POST /subjects` - Create subject
+- `GET /subjects` - Get all subjects
+- `GET /subjects/{id}` - Get subject by ID
+- `PUT /subjects/{id}` - Update subject
+- `DELETE /subjects/{id}` - Delete subject
+- `GET /subjects/category/{categoryId}` - Get subjects by category
+- `GET /subjects/top/{limit}` - Get top subjects
+
+#### Questions
+- `POST /questions` - Create question
+- `GET /questions` - Get all questions
+- `GET /questions/{id}` - Get question by ID
+- `POST /options` - Add option to question
+- `PUT /options/{id}` - Update option
+- `DELETE /options/{id}` - Delete option
+
+#### Answers & Scoring
+- `POST /answer` - Answer a question
+- `GET /subject/{subjectId}` - Get score by subject by user
+- `GET /user/score` - Get user score
+- `GET /user/leaderboard` - Get leaderboard
+- `GET /achievements` - Calculate strikes
+
+#### Image Management
+- `POST /upload` - Upload image
+- `GET /download` - Download image
+- `GET /s3/directory` - Get folder
+- `DELETE /delete` - Delete file
+
+#### Multiplayer Game
+- `POST /game/multi/setup/{playerCount}` - Create or join game
+- `GET /game/multi/{gameId}/status` - Get game status
+- `GET /game/multi/{gameId}/question-status` - Get question status
+- `POST /game/multi/{gameId}/question/{questionId}/answer` - Answer game question
+- `POST /game/multi/{gameId}/terminate` - Terminate game
+
+### 3. Environment Variables (from Environment File)
+- `url` - Base URL for API calls
+- `authToken` - Authentication token
+- `gameID` - Current game ID for multiplayer
+- `subjectID` - Current subject ID
+
+### 4. API Integration Patterns
+
+#### Data Layer Implementation
+```dart
+// data/datasources/api_datasource.dart
+class ApiDataSource {
+  static const String baseUrl = 'https://appswg.com/app';
+  
+  // All endpoints must match Postman collection
+  static const String loginEndpoint = '/login';
+  static const String categoriesEndpoint = '/categories';
+  // ... other endpoints
+}
+```
+
+#### Repository Implementation
+```dart
+// data/repositories/api_repository_impl.dart
+class ApiRepositoryImpl implements ApiRepository {
+  final ApiDataSource apiDataSource;
+  
+  @override
+  Future<Either<Failure, List<Category>>> getCategories() async {
+    // Implementation using endpoints from Postman collection
+  }
+}
+```
+
+### 5. Required Headers
+- **Content-Type**: `application/json` for JSON requests
+- **Authorization**: `Bearer {token}` for authenticated requests
+- **accept-language**: Language preference (e.g., `ar`, `en`)
+
+### 6. Error Handling
+- Handle all HTTP status codes appropriately
+- Use the same error response format as defined in Postman collection
+- Implement proper timeout handling
+- Log API errors for debugging
+
+### 7. Testing
+- **ALWAYS test against the actual API endpoints** from Postman collection
+- Use the same test data as defined in Postman requests
+- Verify response formats match Postman collection examples
+- Test both success and error scenarios
+
+## Prohibited Patterns
+
+- ❌ Creating new API endpoints without updating Postman collection
+- ❌ Hardcoding API URLs instead of using environment variables
+- ❌ Using different base URLs than specified
+- ❌ Ignoring authentication requirements
+- ❌ Not handling API errors properly
+
+## Required Patterns
+
+- ✅ Use Postman collection as source of truth for all endpoints
+- ✅ Use environment file for configuration
+- ✅ Implement proper error handling for all API calls
+- ✅ Use dependency injection for API services
+- ✅ Follow Clean Architecture patterns for API integration
+- ✅ Use proper HTTP methods as defined in Postman collection
+- ✅ Implement proper authentication flow
+- ✅ Test all API integrations thoroughly
+
+## API Documentation Maintenance
+
+- **Keep Postman collection updated** when adding new features
+- **Update environment file** when changing base URLs
+- **Document any API changes** in the collection
+- **Test all endpoints** before marking as complete
+- **Use consistent naming** for endpoints and parameters

@@ -65,6 +65,63 @@ class AuthRepositoryImpl implements AuthRepository {
       _handleSocialSignIn(_remoteDataSource.signInWithTwitterFirebase);
 
   @override
+  Future<AuthUser> createUser(Map<String, dynamic> userData) async {
+    try {
+      final backendResponse = await _remoteDataSource.createUser(userData);
+      final customToken = backendResponse['token'];
+      if (customToken == null) {
+        throw Exception('Backend token not found.');
+      }
+      await _localDataSource.saveToken(customToken);
+      final userJson = backendResponse['profile'];
+      if (userJson == null) {
+        throw Exception('Backend user data not found.');
+      }
+      return AuthUser.fromJson(userJson);
+    } catch (e) {
+      throw Exception('User creation failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<bool> checkUserExists(String username) async {
+    try {
+      final response = await _remoteDataSource.checkUserExists(username);
+      return response['exists'] ?? false;
+    } catch (e) {
+      print('DEBUG: Error checking user existence: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<AuthUser> updateUserAvatar(String avatar) async {
+    try {
+      final response = await _remoteDataSource.updateUserAvatar(avatar);
+      final userJson = response['profile'] ?? response;
+      return AuthUser.fromJson(userJson);
+    } catch (e) {
+      throw Exception('Avatar update failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<AuthUser?> getCurrentUser() async {
+    try {
+      final token = await _localDataSource.getToken();
+      if (token == null) return null;
+      
+      // For now, we'll return null if no token exists
+      // In a real implementation, you might want to validate the token
+      // and fetch user data from the backend
+      return null;
+    } catch (e) {
+      print('DEBUG: Error getting current user: $e');
+      return null;
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     await _remoteDataSource.signOutFirebase();
     await _localDataSource.deleteToken();

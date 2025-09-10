@@ -22,9 +22,9 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 mixin _$Category {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'questions_count')
   String? get questionCount => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
+  String? get incentivePhrase => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,8 +40,9 @@ abstract class $CategoryCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      @JsonKey(name: 'questions_count') String? questionCount,
-      String? color});
+      String? questionCount,
+      String? color,
+      String? incentivePhrase});
 }
 
 /// @nodoc
@@ -61,6 +62,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? name = null,
     Object? questionCount = freezed,
     Object? color = freezed,
+    Object? incentivePhrase = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,6 +81,10 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      incentivePhrase: freezed == incentivePhrase
+          ? _value.incentivePhrase
+          : incentivePhrase // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -94,8 +100,9 @@ abstract class _$$CategoryImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      @JsonKey(name: 'questions_count') String? questionCount,
-      String? color});
+      String? questionCount,
+      String? color,
+      String? incentivePhrase});
 }
 
 /// @nodoc
@@ -113,6 +120,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? name = null,
     Object? questionCount = freezed,
     Object? color = freezed,
+    Object? incentivePhrase = freezed,
   }) {
     return _then(_$CategoryImpl(
       id: null == id
@@ -131,6 +139,10 @@ class __$$CategoryImplCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      incentivePhrase: freezed == incentivePhrase
+          ? _value.incentivePhrase
+          : incentivePhrase // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -141,8 +153,9 @@ class _$CategoryImpl implements _Category {
   const _$CategoryImpl(
       {required this.id,
       required this.name,
-      @JsonKey(name: 'questions_count') this.questionCount,
-      this.color});
+      this.questionCount,
+      this.color,
+      this.incentivePhrase});
 
   factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryImplFromJson(json);
@@ -152,14 +165,15 @@ class _$CategoryImpl implements _Category {
   @override
   final String name;
   @override
-  @JsonKey(name: 'questions_count')
   final String? questionCount;
   @override
   final String? color;
+  @override
+  final String? incentivePhrase;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, questionCount: $questionCount, color: $color)';
+    return 'Category(id: $id, name: $name, questionCount: $questionCount, color: $color, incentivePhrase: $incentivePhrase)';
   }
 
   @override
@@ -171,12 +185,15 @@ class _$CategoryImpl implements _Category {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.questionCount, questionCount) ||
                 other.questionCount == questionCount) &&
-            (identical(other.color, color) || other.color == color));
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.incentivePhrase, incentivePhrase) ||
+                other.incentivePhrase == incentivePhrase));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, questionCount, color);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, questionCount, color, incentivePhrase);
 
   @JsonKey(ignore: true)
   @override
@@ -196,8 +213,9 @@ abstract class _Category implements Category {
   const factory _Category(
       {required final String id,
       required final String name,
-      @JsonKey(name: 'questions_count') final String? questionCount,
-      final String? color}) = _$CategoryImpl;
+      final String? questionCount,
+      final String? color,
+      final String? incentivePhrase}) = _$CategoryImpl;
 
   factory _Category.fromJson(Map<String, dynamic> json) =
       _$CategoryImpl.fromJson;
@@ -207,10 +225,11 @@ abstract class _Category implements Category {
   @override
   String get name;
   @override
-  @JsonKey(name: 'questions_count')
   String? get questionCount;
   @override
   String? get color;
+  @override
+  String? get incentivePhrase;
   @override
   @JsonKey(ignore: true)
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>

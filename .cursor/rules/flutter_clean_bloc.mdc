@@ -1,0 +1,286 @@
+---
+description: Flutter Clean Architecture + BLoC Pattern Rules
+globs: ["**/*.dart"]
+alwaysApply: true
+---
+
+# Flutter Clean Architecture + BLoC Pattern Rules
+
+This project follows Clean Architecture principles with BLoC pattern for state management. All code must adhere to these guidelines.
+
+## Project Structure
+
+```
+lib/
+├── main.dart
+└── SeenWaGeem/
+    ├── core/           # Core utilities, constants, errors
+    ├── data/           # Data layer (repositories, data sources, models)
+    ├── domain/         # Business logic layer (entities, use cases, repository interfaces)
+    └── presentation/   # UI layer (pages, widgets, BLoCs, states, events)
+```
+
+## Clean Architecture Layers
+
+### 1. Domain Layer (`domain/`)
+- **Entities**: Core business objects
+- **Use Cases**: Business logic implementation
+- **Repository Interfaces**: Abstract contracts for data access
+- **Value Objects**: Immutable objects representing domain concepts
+
+**Rules:**
+- NO dependencies on external frameworks
+- NO dependencies on data or presentation layers
+- Pure Dart classes only
+- Use abstract classes for repository interfaces
+
+### 2. Data Layer (`data/`)
+- **Repository Implementations**: Concrete implementations of domain interfaces
+- **Data Sources**: Local (SQLite, SharedPreferences) and Remote (API) data sources
+- **Models**: Data transfer objects that map to entities
+- **Mappers**: Convert between models and entities
+
+**Rules:**
+- Implement domain repository interfaces
+- Handle data transformation between external and internal formats
+- Manage data caching and offline capabilities
+- Use dependency injection for data sources
+
+### 3. Presentation Layer (`presentation/`)
+- **Pages**: Full-screen UI components
+- **Widgets**: Reusable UI components
+- **BLoCs**: Business Logic Components for state management
+- **States**: Immutable state classes
+- **Events**: User actions and system events
+
+## BLoC Pattern Implementation
+
+### BLoC Structure
+```dart
+// events/
+abstract class Event {}
+
+// states/
+abstract class State {}
+
+// bloc/
+class FeatureBloc extends Bloc<Event, State> {
+  final UseCase useCase;
+  
+  FeatureBloc({required this.useCase}) : super(InitialState()) {
+    on<EventType>(_onEventType);
+  }
+  
+  void _onEventType(EventType event, Emitter<State> emit) {
+    // Handle event and emit new state
+  }
+}
+```
+
+### State Management Rules
+- **Immutable States**: All state classes must be immutable
+- **Single Source of Truth**: One BLoC per feature/domain
+- **Event-Driven**: All state changes triggered by events
+- **Pure Functions**: BLoC methods should be pure (no side effects in event handlers)
+- **Error Handling**: Always handle errors and emit error states
+
+### Naming Conventions
+- **BLoCs**: `FeatureBloc` (e.g., `UserBloc`, `AuthBloc`)
+- **Events**: `FeatureEvent` (e.g., `UserLoginEvent`, `UserLogoutEvent`)
+- **States**: `FeatureState` (e.g., `UserLoadingState`, `UserLoadedState`)
+- **Use Cases**: `FeatureUseCase` (e.g., `GetUserUseCase`, `LoginUseCase`)
+
+## Dependency Injection
+
+Use `get_it` or similar DI container:
+```dart
+// Register dependencies
+GetIt.instance.registerLazySingleton<Repository>(() => RepositoryImpl());
+GetIt.instance.registerFactory<UseCase>(() => UseCase(GetIt.instance()));
+GetIt.instance.registerFactory<Bloc>(() => Bloc(GetIt.instance()));
+```
+
+## File Organization
+
+### Domain Layer Files
+- `entities/user_entity.dart`
+- `usecases/get_user_usecase.dart`
+- `repositories/user_repository.dart`
+
+### Data Layer Files
+- `models/user_model.dart`
+- `repositories/user_repository_impl.dart`
+- `datasources/user_remote_datasource.dart`
+- `datasources/user_local_datasource.dart`
+
+### Presentation Layer Files
+- `pages/user_page.dart`
+- `widgets/user_widget.dart`
+- `bloc/user_bloc.dart`
+- `bloc/user_event.dart`
+- `bloc/user_state.dart`
+
+## Code Quality Rules
+
+### 1. Separation of Concerns
+- Each layer has a single responsibility
+- No direct dependencies between non-adjacent layers
+- Use interfaces/abstract classes for layer boundaries
+
+### 2. Dependency Rule
+- Dependencies point inward (toward domain)
+- Domain layer has no dependencies
+- Data and Presentation depend on Domain
+- Presentation can depend on Data for specific implementations
+
+### 3. Error Handling
+- Use `Either<Failure, Success>` pattern for error handling
+- Define custom `Failure` classes for different error types
+- Always handle errors in BLoCs and emit appropriate states
+
+### 4. Code Generation
+- **ALWAYS use `.freezed.dart` for immutable data classes**
+- **ALWAYS use `.g.dart` for JSON serialization when needed**
+- Use `freezed` package for entities, models, states, and events
+- Use `json_annotation` and `json_serializable` for data serialization
+- Run `flutter packages pub run build_runner build` after adding code generation annotations
+
+### 5. Testing
+- Write unit tests for use cases
+- Write unit tests for BLoCs
+- Write integration tests for repositories
+- Mock external dependencies
+
+### 6. Code Style
+- Use meaningful names for classes, methods, and variables
+- Keep methods small and focused
+- Use const constructors where possible
+- Follow Dart/Flutter naming conventions
+
+## Common Patterns
+
+### Repository Pattern
+```dart
+abstract class UserRepository {
+  Future<Either<Failure, User>> getUser(String id);
+  Future<Either<Failure, List<User>>> getUsers();
+}
+
+class UserRepositoryImpl implements UserRepository {
+  final UserRemoteDataSource remoteDataSource;
+  final UserLocalDataSource localDataSource;
+  
+  // Implementation
+}
+```
+
+### Use Case Pattern
+```dart
+class GetUserUseCase {
+  final UserRepository repository;
+  
+  GetUserUseCase(this.repository);
+  
+  Future<Either<Failure, User>> call(String id) async {
+    return await repository.getUser(id);
+  }
+}
+```
+
+### BLoC Event Handling
+```dart
+void _onGetUser(GetUserEvent event, Emitter<UserState> emit) async {
+  emit(UserLoadingState());
+  
+  final result = await getUserUseCase(event.userId);
+  
+  result.fold(
+    (failure) => emit(UserErrorState(failure.message)),
+    (user) => emit(UserLoadedState(user)),
+  );
+}
+```
+
+### Code Generation Patterns
+
+#### Freezed for Immutable Classes
+```dart
+// user_entity.dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'user_entity.freezed.dart';
+
+@freezed
+class UserEntity with _$UserEntity {
+  const factory UserEntity({
+    required String id,
+    required String name,
+    required String email,
+  }) = _UserEntity;
+}
+
+// user_state.dart
+@freezed
+class UserState with _$UserState {
+  const factory UserState.initial() = _Initial;
+  const factory UserState.loading() = _Loading;
+  const factory UserState.loaded(UserEntity user) = _Loaded;
+  const factory UserState.error(String message) = _Error;
+}
+```
+
+#### JSON Serialization
+```dart
+// user_model.dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
+
+@freezed
+class UserModel with _$UserModel {
+  const factory UserModel({
+    required String id,
+    required String name,
+    required String email,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+}
+```
+
+## Prohibited Patterns
+
+- ❌ Direct API calls from UI widgets
+- ❌ Business logic in UI components
+- ❌ Direct database access from presentation layer
+- ❌ Mutable state objects
+- ❌ Side effects in BLoC event handlers
+- ❌ Circular dependencies between layers
+- ❌ Global state without proper management
+
+## Required Patterns
+
+- ✅ Repository pattern for data access
+- ✅ Use case pattern for business logic
+- ✅ BLoC pattern for state management
+- ✅ Dependency injection for loose coupling
+- ✅ Error handling with Either pattern
+- ✅ Immutable state objects
+- ✅ Event-driven architecture
+- ✅ **Code generation with `.freezed.dart` for immutable classes**
+- ✅ **Code generation with `.g.dart` for JSON serialization**
+- ✅ **Use `freezed` package for entities, models, states, and events**
+- ✅ **Use Postman collection as source of truth for API endpoints**
+- ✅ **Use environment file for API configuration**
+
+## Backend API Integration
+
+This project uses a specific backend API configuration. See `backend_api.mdc` for complete API integration guidelines.
+
+### Key API Requirements
+- **Base URL**: `https://appswg.com/app` (production)
+- **API Reference**: `SeenWaGeem.postman_collection.json`
+- **Environment Config**: `swg-production-env.postman_environment.json`
+- All endpoints must match Postman collection
+- Use environment variables for configuration

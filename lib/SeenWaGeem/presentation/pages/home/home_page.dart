@@ -45,19 +45,23 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           _buildNavItem(
-            iconAsset: 'assets/images/icons/home-icon.svg',
+            iconAsset: null,
+            icon: Icons.home,
             label: 'الرئيسية',
           ),
           _buildNavItem(
-            iconAsset: 'assets/images/icons/challenges-icon.svg',
+            iconAsset: null,
+            icon: Icons.quiz,
             label: 'الاختبارات',
           ),
           _buildNavItem(
-            iconAsset: 'assets/images/icons/leaderboard-icon.svg',
+            iconAsset: null,
+            icon: Icons.leaderboard,
             label: 'المتصدرين',
           ),
           _buildNavItem(
-            iconAsset: 'assets/images/icons/profile-icon.svg',
+            iconAsset: null,
+            icon: Icons.person,
             label: 'الحساب',
           ),
         ],
@@ -66,31 +70,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   BottomNavigationBarItem _buildNavItem({
-    required String iconAsset,
+    String? iconAsset,
+    IconData? icon,
     required String label,
   }) {
     return BottomNavigationBarItem(
       label: label,
       icon: Padding(
         padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
-        child: SvgPicture.asset(
-          iconAsset,
-          height: 24,
-          width: 24,
-          colorFilter: const ColorFilter.mode(AppColors.grey, BlendMode.srcIn),
-        ),
+        child: iconAsset != null
+            ? SvgPicture.asset(
+                iconAsset,
+                height: 24,
+                width: 24,
+                colorFilter: const ColorFilter.mode(AppColors.grey, BlendMode.srcIn),
+              )
+            : Icon(
+                icon!,
+                size: 24,
+                color: AppColors.grey,
+              ),
       ),
       activeIcon: Padding(
         padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
-        child: SvgPicture.asset(
-          iconAsset,
-          height: 24,
-          width: 24,
-          colorFilter: const ColorFilter.mode(
-            AppColors.accent,
-            BlendMode.srcIn,
-          ),
-        ),
+        child: iconAsset != null
+            ? SvgPicture.asset(
+                iconAsset,
+                height: 24,
+                width: 24,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.accent,
+                  BlendMode.srcIn,
+                ),
+              )
+            : Icon(
+                icon!,
+                size: 24,
+                color: AppColors.accent,
+              ),
       ),
     );
   }

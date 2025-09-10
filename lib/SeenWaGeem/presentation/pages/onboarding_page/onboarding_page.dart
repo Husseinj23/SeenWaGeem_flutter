@@ -37,7 +37,8 @@ class OnboardingPage extends StatelessWidget {
     final pageController = PageController();
     return BlocProvider(
       create: (context) => sl<OnboardingBloc>(),
-      child: Scaffold(
+      child: Builder(
+        builder: (context) => Scaffold(
         body: SafeArea(
           child: Column(
             children: [
@@ -84,6 +85,7 @@ class OnboardingPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

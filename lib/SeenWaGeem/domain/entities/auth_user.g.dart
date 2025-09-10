@@ -12,7 +12,8 @@ _$AuthUserImpl _$$AuthUserImplFromJson(Map<String, dynamic> json) =>
       email: json['username'] as String?,
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
-      photoUrl: json['avatar'] as String?,
+      avatar: json['avatar'] as String?,
+      photoUrl: json['photoUrl'] as String?,
     );
 
 Map<String, dynamic> _$$AuthUserImplToJson(_$AuthUserImpl instance) =>
@@ -21,5 +22,6 @@ Map<String, dynamic> _$$AuthUserImplToJson(_$AuthUserImpl instance) =>
       'username': instance.email,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      'avatar': instance.photoUrl,
+      'avatar': instance.avatar,
+      'photoUrl': instance.photoUrl,
     };

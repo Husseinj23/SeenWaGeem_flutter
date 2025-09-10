@@ -10,4 +10,7 @@ abstract class AuthState with _$AuthState {
   const factory AuthState.loading() = _Loading;
   const factory AuthState.success(AuthUser user) = _Success;
   const factory AuthState.failure(String message) = _Failure;
+  const factory AuthState.userExists(bool exists) = _UserExists;
+  const factory AuthState.userCreated(AuthUser user) = _UserCreated;
+  const factory AuthState.avatarUpdated(AuthUser user) = _AvatarUpdated;
 }

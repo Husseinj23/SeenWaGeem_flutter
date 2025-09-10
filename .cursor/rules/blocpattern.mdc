@@ -1,0 +1,17 @@
+---
+description: BLoC Pattern implementation rules - see flutter_clean_bloc.mdc for complete guidelines
+globs: ["**/*.dart"]
+alwaysApply: true
+---
+
+# BLoC Pattern Rules
+
+This project uses BLoC pattern for state management. See `flutter_clean_bloc.mdc` for complete implementation guidelines.
+
+## Key BLoC Requirements
+- Use BLoC for all state management
+- Immutable states only (use `.freezed.dart` for code generation)
+- Event-driven architecture
+- Single source of truth per feature
+- Pure event handlers (no side effects)
+- Use code generation for states and events
