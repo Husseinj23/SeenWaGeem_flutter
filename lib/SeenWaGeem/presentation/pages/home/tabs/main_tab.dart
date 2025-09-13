@@ -58,8 +58,6 @@ class MainTabView extends StatelessWidget {
               const SizedBox(height: 24),
               _buildContinueChallengesSection(context, theme),
               const SizedBox(height: 24),
-              _buildChallengesSection(context, theme),
-              const SizedBox(height: 24),
               _buildAdditionalChallengesSection(context, theme),
               const SizedBox(
                 height: 20,
@@ -87,13 +85,13 @@ class MainTabView extends StatelessWidget {
       ),
       child: BlocBuilder<LeaderboardBloc, LeaderboardState>(
         builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            failure: (message) => Center(child: Text(message)),
-            success: (users, isTopUsers) =>
-                _build3DPodium(users, theme, context),
-          );
+        return state.when(
+          initial: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          failure: (message) => Center(child: Text(message)),
+          success: (users, isTopUsers) =>
+              _build3DPodium(users, theme, context),
+        );
         },
       ),
     );
@@ -508,61 +506,6 @@ class MainTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildChallengesSection(BuildContext context, ThemeData theme) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        return state.when(
-          initial: () => const Center(child: CircularProgressIndicator()),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          failure: (message) => Center(child: Text(message)),
-          success: (topCategories) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'أهم التحديات',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          childAspectRatio: 1.15,
-                        ),
-                    itemCount: topCategories.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final category = topCategories[index];
-                      return _buildChallengeGridItem(
-                        theme,
-                        category.name,
-                        "${category.questionCount ?? '...'} سؤال",
-                        Color(
-                          int.parse(
-                            category.color?.replaceFirst('#', '0xFF') ??
-                                '0xFFB9A2D8',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
 
   Widget _buildChallengeGridItem(
     ThemeData theme,
@@ -744,6 +687,19 @@ class MainTabView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getCategoryColor(String categoryName) {
+    switch (categoryName.toLowerCase()) {
+      case 'علوم':
+        return const Color(0xFFFF9800); // Orange
+      case 'تاريخ':
+        return const Color(0xFF9C27B0); // Purple
+      case 'جغرافيا':
+        return const Color(0xFF2196F3); // Blue
+      default:
+        return const Color(0xFFB9A2D8); // Default purple
+    }
   }
 
   Widget _buildAdditionalChallengesSection(

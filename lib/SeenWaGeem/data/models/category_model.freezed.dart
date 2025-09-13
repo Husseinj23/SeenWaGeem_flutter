@@ -22,6 +22,7 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 mixin _$CategoryModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @StringOrIntConverter()
   String? get questionCount => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
   String? get incentivePhrase => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $CategoryModelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String? questionCount,
+      @StringOrIntConverter() String? questionCount,
       String? color,
       String? incentivePhrase});
 }
@@ -101,7 +102,7 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      String? questionCount,
+      @StringOrIntConverter() String? questionCount,
       String? color,
       String? incentivePhrase});
 }
@@ -154,7 +155,7 @@ class _$CategoryModelImpl implements _CategoryModel {
   const _$CategoryModelImpl(
       {required this.id,
       required this.name,
-      this.questionCount,
+      @StringOrIntConverter() this.questionCount,
       this.color,
       this.incentivePhrase});
 
@@ -166,6 +167,7 @@ class _$CategoryModelImpl implements _CategoryModel {
   @override
   final String name;
   @override
+  @StringOrIntConverter()
   final String? questionCount;
   @override
   final String? color;
@@ -214,7 +216,7 @@ abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel(
       {required final String id,
       required final String name,
-      final String? questionCount,
+      @StringOrIntConverter() final String? questionCount,
       final String? color,
       final String? incentivePhrase}) = _$CategoryModelImpl;
 
@@ -226,6 +228,7 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String get name;
   @override
+  @StringOrIntConverter()
   String? get questionCount;
   @override
   String? get color;
