@@ -91,14 +91,19 @@ class MainTabView extends StatelessWidget {
             initial: () => const Center(child: CircularProgressIndicator()),
             loading: () => const Center(child: CircularProgressIndicator()),
             failure: (message) => Center(child: Text(message)),
-            success: (users, isTopUsers) => _build3DPodium(users, theme),
+            success: (users, isTopUsers) =>
+                _build3DPodium(users, theme, context),
           );
         },
       ),
     );
   }
 
-  Widget _build3DPodium(List<LeaderboardUser> users, ThemeData theme) {
+  Widget _build3DPodium(
+    List<LeaderboardUser> users,
+    ThemeData theme,
+    BuildContext context,
+  ) {
     if (users.isEmpty) return const SizedBox.shrink();
 
     // Get top 3 users
@@ -120,114 +125,130 @@ class MainTabView extends StatelessWidget {
             ),
           ),
         ),
-        // Podium
+        // Podium with background image
         Expanded(
-          child: Stack(
-            children: [
-              // Podium base
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xFFE0E0E0), Color(0xFFBDBDBD)],
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+            child: Stack(
+              children: [
+                // Background podium image
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    child: Image.asset(
+                      'assets/images/home-header.png',
+                      fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.circular(18),
                   ),
                 ),
-              ),
-              // 3D Podium bars
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  // Third place (left)
-                  if (thirdPlace != null)
-                    _buildPodiumBar(
+                // User avatars positioned precisely on podium bases
+                // Third place (left podium)
+                if (thirdPlace != null)
+                  Positioned(
+                    left:
+                        20, // ADJUST: Move left (decrease) or right (increase)
+                    bottom: 5, // ADJUST: Move up (increase) or down (decrease)
+                    child: _buildPodiumUser(
                       user: thirdPlace,
                       rank: 3,
-                      height: 50,
-                      color: const Color(0xFF2196F3), // Blue
                       theme: theme,
+                      isLeft: true,
                     ),
-                  // First place (center)
-                  if (firstPlace != null)
-                    _buildPodiumBar(
+                  ),
+                // First place (center podium)
+                if (firstPlace != null)
+                  Positioned(
+                    left:
+                        MediaQuery.of(context).size.width * 0.5 -
+                        50, // ADJUST: Change 0.5 to move left/right, change -30 to fine-tune
+                    bottom: 60, // ADJUST: Move up (increase) or down (decrease)
+                    child: _buildPodiumUser(
                       user: firstPlace,
                       rank: 1,
-                      height: 70,
-                      color: const Color(0xFFFF9800), // Orange
                       theme: theme,
-                      isFirst: true,
+                      isCenter: true,
                     ),
-                  // Second place (right)
-                  if (secondPlace != null)
-                    _buildPodiumBar(
+                  ),
+                // Second place (right podium)
+                if (secondPlace != null)
+                  Positioned(
+                    right:
+                        20, // ADJUST: Move right (decrease) or left (increase)
+                    bottom: 10, // ADJUST: Move up (increase) or down (decrease)
+                    child: _buildPodiumUser(
                       user: secondPlace,
                       rank: 2,
-                      height: 60,
-                      color: const Color(0xFF2196F3), // Blue
                       theme: theme,
+                      isRight: true,
                     ),
-                ],
-              ),
-            ],
+                  ),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildPodiumBar({
+  Widget _buildPodiumUser({
     required LeaderboardUser user,
     required int rank,
-    required double height,
-    required Color color,
     required ThemeData theme,
-    bool isFirst = false,
+    bool isLeft = false,
+    bool isCenter = false,
+    bool isRight = false,
   }) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        // Crown for first place
-        if (isFirst) ...[
-          const Icon(Icons.emoji_events, color: Color(0xFFFFD700), size: 20),
-          const SizedBox(height: 2),
+        // Crown for first place (center)
+        if (isCenter) ...[
+          const Icon(Icons.emoji_events, color: Color(0xFFFFD700), size: 24),
+          const SizedBox(height: 4),
         ],
-        // Avatar
+        // Avatar positioned on podium base
         Stack(
           children: [
             CircleAvatar(
-              radius: 32,
-              backgroundColor: const Color(0xFFE0E0E0),
-              backgroundImage: user.avatar.isNotEmpty
-                  ? CachedNetworkImageProvider(
-                      'https://appswg.com/app/download?foldername=avatar&filename=${user.avatar}',
-                    )
-                  : null,
-              child: user.avatar.isEmpty
-                  ? const Icon(Icons.person, color: Colors.grey, size: 32)
-                  : null,
+              radius: 28,
+              backgroundColor: Colors.white,
+              child: CircleAvatar(
+                radius: 26,
+                backgroundColor: const Color(0xFFE0E0E0),
+                backgroundImage: user.avatar.isNotEmpty
+                    ? CachedNetworkImageProvider(
+                        'https://appswg.com/app/download?foldername=avatar&filename=${user.avatar}',
+                      )
+                    : null,
+                child: user.avatar.isEmpty
+                    ? const Icon(Icons.person, color: Colors.grey, size: 28)
+                    : null,
+              ),
             ),
             // Rank badge
             Positioned(
               bottom: 0,
-              left: 0,
+              right: 0,
               child: Container(
-                width: 20,
-                height: 20,
+                width: 22,
+                height: 22,
                 decoration: BoxDecoration(
                   color: rank == 1
-                      ? const Color(0xFF4CAF50) // Green for 1st
+                      ? const Color(0xFFFFD700) // Gold for 1st
                       : rank == 2
-                      ? const Color(0xFFFF9800) // Orange for 2nd
-                      : const Color(0xFFF44336), // Red for 3rd
+                      ? const Color(0xFFC0C0C0) // Silver for 2nd
+                      : const Color(0xFFCD7F32), // Bronze for 3rd
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.2),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Center(
                   child: Text(
@@ -243,11 +264,11 @@ class MainTabView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         // Username
         Text(
           user.username,
-          style: theme.textTheme.bodyMedium?.copyWith(
+          style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
@@ -255,30 +276,7 @@ class MainTabView extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 2),
-        // Podium bar
-        Container(
-          width: 60,
-          height: height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [color.withOpacity(0.8), color],
-            ),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: color.withOpacity(0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-        ),
+        const SizedBox(height: 12), // Space above podium base
       ],
     );
   }
@@ -350,7 +348,7 @@ class MainTabView extends StatelessWidget {
                   border: Border.all(color: const Color(0xFFE0E0E0), width: 1),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -434,7 +432,7 @@ class MainTabView extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 12,
               offset: const Offset(0, 3),
             ),
@@ -453,7 +451,7 @@ class MainTabView extends StatelessWidget {
                     value: 0.0, // 0% progress
                     strokeWidth: 6,
                     valueColor: AlwaysStoppedAnimation<Color>(color),
-                    backgroundColor: color.withOpacity(0.3),
+                    backgroundColor: color.withValues(alpha: 0.3),
                   ),
                   Text(
                     '0%',
@@ -674,7 +672,7 @@ class MainTabView extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -693,7 +691,7 @@ class MainTabView extends StatelessWidget {
                     value: 0.0, // 0% progress
                     strokeWidth: 4,
                     valueColor: AlwaysStoppedAnimation<Color>(color),
-                    backgroundColor: color.withOpacity(0.2),
+                    backgroundColor: color.withValues(alpha: 0.2),
                   ),
                   Text(
                     '0%',
@@ -737,7 +735,7 @@ class MainTabView extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, color: color, size: 20),
@@ -746,32 +744,6 @@ class MainTabView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _getCategoryColor(String categoryName) {
-    switch (categoryName.toLowerCase()) {
-      case 'علوم':
-        return const Color(0xFFFF9800); // Orange
-      case 'تاريخ':
-        return const Color(0xFF9C27B0); // Purple
-      case 'جغرافيا':
-        return const Color(0xFF2196F3); // Blue
-      default:
-        return const Color(0xFFB9A2D8); // Default purple
-    }
-  }
-
-  IconData _getCategoryIcon(String categoryName) {
-    switch (categoryName.toLowerCase()) {
-      case 'علوم':
-        return Icons.science; // Test tube icon
-      case 'تاريخ':
-        return Icons.mosque; // Mosque icon
-      case 'جغرافيا':
-        return Icons.map; // Map icon
-      default:
-        return Icons.category; // Default icon
-    }
   }
 
   Widget _buildAdditionalChallengesSection(
@@ -869,7 +841,7 @@ class MainTabView extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -886,7 +858,7 @@ class MainTabView extends StatelessWidget {
                   width: 20, // Reduced size
                   height: 20, // Reduced size
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Icon(
@@ -911,7 +883,7 @@ class MainTabView extends StatelessWidget {
               questionCount,
               style: theme.textTheme.bodySmall?.copyWith(
                 // Changed to bodySmall
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
               ),
             ),
           ],

@@ -110,6 +110,7 @@ flutter:
      - 'assets/images/challenges-icon.svg'
      - 'assets/images/leaderboard-icon.svg'
      - 'assets/images/profile-icon.svg'
+     - 'assets/images/home-header.png'
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
