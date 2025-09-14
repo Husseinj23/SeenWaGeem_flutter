@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'SeenWaGeem/core/di/injection_container.dart';
+import 'SeenWaGeem/core/session/activity_tracker.dart';
+import 'SeenWaGeem/core/session/session_manager.dart';
 import 'SeenWaGeem/core/theme/app_theme.dart';
 import 'SeenWaGeem/presentation/pages/splash_page/splash_page.dart';
 import 'firebase_options.dart';
@@ -10,6 +12,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await configureDependencies();
+  
+  // Initialize session manager
+  final sessionManager = sl<SessionManager>();
+  await sessionManager.initialize();
+  
   runApp(const MyApp());
 }
 
@@ -22,7 +29,9 @@ class MyApp extends StatelessWidget {
       title: 'Seen Wa Geem',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const SplashPage(),
+      home: const ActivityTracker(
+        child: SplashPage(),
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:seen_wa_geem_flutter/SeenWaGeem/domain/entities/leaderboard_user.dart';
 import 'package:seen_wa_geem_flutter/SeenWaGeem/domain/repositories/leaderboard_repository.dart';
 import 'package:seen_wa_geem_flutter/SeenWaGeem/data/datasources/remote/leaderboard_remote_data_source.dart';

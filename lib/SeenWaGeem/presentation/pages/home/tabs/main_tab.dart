@@ -6,7 +6,6 @@ import '../../../../core/di/injection_container.dart';
 import '../../../../domain/entities/leaderboard_user.dart';
 import '../../../../presentation/bloc/home_bloc/home_bloc.dart';
 import '../../../../presentation/bloc/home_bloc/home_event.dart';
-import '../../../../presentation/bloc/home_bloc/home_state.dart';
 import '../../../../presentation/bloc/leaderboard_bloc/leaderboard_bloc.dart';
 import '../../../../presentation/bloc/leaderboard_bloc/leaderboard_event.dart';
 import '../../../../presentation/bloc/leaderboard_bloc/leaderboard_state.dart';
@@ -507,47 +506,6 @@ class MainTabView extends StatelessWidget {
   }
 
 
-  Widget _buildChallengeGridItem(
-    ThemeData theme,
-    String title,
-    String subtitle,
-    Color color,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildContinueChallengesSection(
     BuildContext context,
@@ -689,18 +647,6 @@ class MainTabView extends StatelessWidget {
     );
   }
 
-  Color _getCategoryColor(String categoryName) {
-    switch (categoryName.toLowerCase()) {
-      case 'علوم':
-        return const Color(0xFFFF9800); // Orange
-      case 'تاريخ':
-        return const Color(0xFF9C27B0); // Purple
-      case 'جغرافيا':
-        return const Color(0xFF2196F3); // Blue
-      default:
-        return const Color(0xFFB9A2D8); // Default purple
-    }
-  }
 
   Widget _buildAdditionalChallengesSection(
     BuildContext context,

@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../core/session/session_manager.dart';
 import '../../data/datasources/local/auth_local_data_source.dart';
 import '../../data/datasources/remote/auth_remote_data_source.dart';
 import '../../domain/entities/auth_user.dart';
@@ -9,8 +10,9 @@ import '../../domain/repositories/auth_repository.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
+  final SessionManager _sessionManager;
 
-  AuthRepositoryImpl(this._remoteDataSource, this._localDataSource);
+  AuthRepositoryImpl(this._remoteDataSource, this._localDataSource, this._sessionManager);
 
   Future<AuthUser> _handleSocialSignIn(
     Future<Map<String, dynamic>> Function()
@@ -48,6 +50,13 @@ class AuthRepositoryImpl implements AuthRepository {
         print('DEBUG: Available keys in response: ${backendResponse.keys}');
         throw Exception('Backend user data not found. Available keys: ${backendResponse.keys}');
       }
+      
+      // Save session data for auto-login
+      await _sessionManager.saveSession(
+        token: customToken,
+        userData: userJson,
+      );
+      
       return AuthUser.fromJson(userJson);
     } catch (e) {
       throw Exception('Sign in failed: ${e.toString()}');
@@ -125,5 +134,6 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     await _remoteDataSource.signOutFirebase();
     await _localDataSource.deleteToken();
+    await _sessionManager.clearSession();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/session/activity_tracker.dart';
 import '../../../core/theme/app_colors.dart';
 import 'tabs/account_tab.dart';
 import 'tabs/leaderboard_tab.dart';
@@ -32,8 +33,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(index: _selectedIndex, children: _widgetOptions),
+    return ActivityTracker(
+      child: Scaffold(
+        body: IndexedStack(index: _selectedIndex, children: _widgetOptions),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
             label: 'الحساب',
           ),
         ],
+      ),
       ),
     );
   }
