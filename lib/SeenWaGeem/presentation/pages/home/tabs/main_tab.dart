@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../science_games_page/science_games_page.dart';
+import '../../history_games_page/history_games_page.dart';
+import '../../geography_games_page/geography_games_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
@@ -525,6 +528,7 @@ class MainTabView extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildContinueChallengeCard(
+            context,
             theme,
             'علوم',
             'استكشف علوم!',
@@ -533,6 +537,7 @@ class MainTabView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           _buildContinueChallengeCard(
+            context,
             theme,
             'تاريخ',
             'استكشف تاريخ!',
@@ -541,6 +546,7 @@ class MainTabView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           _buildContinueChallengeCard(
+            context,
             theme,
             'جغرافيا',
             'استكشف جغرافيا!',
@@ -553,6 +559,7 @@ class MainTabView extends StatelessWidget {
   }
 
   Widget _buildContinueChallengeCard(
+    BuildContext context,
     ThemeData theme,
     String title,
     String subtitle,
@@ -561,9 +568,31 @@ class MainTabView extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () {
-        // TODO: Navigate to specific challenge page
-        // This will be implemented later when you tell me the pages
-        print('Tapped on continue challenge: $title');
+        if (title == 'علوم') {
+          // Navigate to Science Games page
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const ScienceGamesPage(),
+            ),
+          );
+        } else if (title == 'تاريخ') {
+          // Navigate to History Games page
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const HistoryGamesPage(),
+            ),
+          );
+        } else if (title == 'جغرافيا') {
+          // Navigate to Geography Games page
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const GeographyGamesPage(),
+            ),
+          );
+        } else {
+          // TODO: Navigate to other challenge pages
+          print('Tapped on continue challenge: $title');
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
